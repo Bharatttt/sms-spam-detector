@@ -1,22 +1,14 @@
 # SMS Spam Detector
 
-Classify an SMS as **spam** or **ham** (a legitimate message) in a small web app or through a JSON API. The app uses a TF-IDF + Logistic Regression pipeline. Supply a trusted trained model or retrain with your own datasets before starting the demo. No API key or external AI service is needed.
+Classify an SMS as **spam** or **ham** (a legitimate message) in a small web app or through a JSON API. The app uses a TF-IDF + Logistic Regression pipeline. A trained model is included, so you can run the demo without training anything first. No API key or external AI service is needed.
 
-## Model setup
+## Included model
 
-The original trained model was fitted on private SMS datasets and is **not included in the public repository**. Raw messages are also excluded. The code and recorded aggregate metrics are included.
-
-If you already have the original project, copy its `model/spam_pipeline.joblib` into this repository's `model` folder. For example, from the repository root in PowerShell:
-
-```powershell
-Copy-Item -LiteralPath 'C:/path/to/original/model/spam_pipeline.joblib' -Destination './model/spam_pipeline.joblib'
-```
-
-Otherwise, follow **Retrain with your datasets** below after installing the requirements. The server will not start until that file exists. Only copy a model from a source you trust.
+`model/spam_pipeline.joblib` contains the fitted TF-IDF vectorizer and Logistic Regression classifier. It is loaded automatically when the server starts. Raw SMS datasets are not included.
 
 ## Run the demo
 
-Python 3.11 is recommended. The application has also been checked locally with Python 3.9. Run the following from PowerShell. After cloning, complete the model setup above before the final command:
+Python 3.11 is recommended. The application has also been checked locally with Python 3.9. Run the following from PowerShell:
 
 ```powershell
 git clone https://github.com/Bharatttt/sms-spam-detector.git
@@ -112,7 +104,7 @@ The loader supports several inconsistent CSV layouts, but inspect your parsed la
 
 ## Docker
 
-Complete the model setup first; the image needs your local `model/spam_pipeline.joblib`.
+The image includes the trained model from this repository.
 
 ```bash
 docker build -t sms-spam-detector .
@@ -127,7 +119,7 @@ Open **http://127.0.0.1:8010**. Docker serves on port 8000 inside the container;
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
-The checks cover model loading, example predictions, probability bounds, input validation, unavailable-model behavior, and dataset paths without a trailing slash. The two model-specific checks are skipped when the private model file is absent. GitHub Actions runs the remaining checks on Python 3.11; it does not validate the private model or run an HTTP smoke test.
+The checks cover model loading, example predictions, probability bounds, input validation, unavailable-model behavior, and dataset paths without a trailing slash. GitHub Actions runs all six checks with the included model on Python 3.11, then starts the server and checks the web page, health endpoint, and prediction API.
 
 ## Files
 
@@ -136,7 +128,7 @@ The checks cover model loading, example predictions, probability bounds, input v
 | `app.py` | FastAPI endpoints and the HTML/CSS/JavaScript demo |
 | `data_utils.py` | CSV loading, text cleaning, and corpus deduplication |
 | `train_model.py` | Training and validation command |
-| `model/spam_pipeline.joblib` | Required local vectorizer and classifier; excluded from Git |
+| `model/spam_pipeline.joblib` | Included trained vectorizer and Logistic Regression classifier |
 | `model/metrics.json` | Recorded validation results |
 | `requirements.txt` | Pinned Python dependencies |
 | `Dockerfile` | Container build and startup command |

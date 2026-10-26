@@ -11,7 +11,6 @@ import app
 from data_utils import load_combined_corpus
 
 
-@unittest.skipUnless(app.MODEL_PATH.is_file(), "Supply the private model to run prediction checks")
 class ClassifierTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

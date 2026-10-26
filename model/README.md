@@ -1,7 +1,7 @@
-# Local model
+# Trained model
 
-Place a trusted `spam_pipeline.joblib` here, or run `train_model.py` with your own datasets. The pipeline must use labels 0 (ham) and 1 (spam) and expose `predict_proba`.
+`spam_pipeline.joblib` bundles the TF-IDF vectorizer and Logistic Regression classifier used by the demo. Labels are 0 (ham) and 1 (spam). The server loads this file automatically.
 
-The original model was trained on private SMS data and is not published. `metrics.json` contains the aggregate results recorded during the original training run; it is not a new evaluation of your replacement model. Retraining replaces both output files.
+`metrics.json` contains the aggregate results recorded during the original training run. The source SMS datasets are not included. See the main README for the evaluation split, results, and limitations.
 
-Do not commit raw messages or a private-data-derived model without checking whether they can be shared. Joblib files can execute code when loaded; use only files from trusted sources.
+Run `train_model.py` with your own datasets to replace both files. Only load trusted joblib files: Python model serialization can execute code when loading a file.
