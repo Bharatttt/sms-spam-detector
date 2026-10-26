@@ -1,0 +1,16 @@
+{
+  "validation_split": "85/15 (stratified, random_state=42)",
+  "n_train": 2161,
+  "n_val": 382,
+  "accuracy": 0.9136,
+  "precision": 0.9144,
+  "recall_sensitivity": 0.9096,
+  "f1_score": 0.912,
+  "specificity": 0.9175,
+  "confusion_matrix": {
+    "TN": 178,
+    "FP": 16,
+    "FN": 17,
+    "TP": 171
+  }
+}
